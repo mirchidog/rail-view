@@ -1,4 +1,4 @@
-const data = [
+export const data = [
   {
     nom: "Abancourt",
     position_geographique: {
@@ -19474,9 +19474,3 @@ const data = [
     }
   }
 ];
-
-// Create lists from latitude and longitude values
-var latList = data.map(item => item.position_geographique.lat)
-var lonList = data.map(item => item.position_geographique.lon)
-export { latList };
-export { lonList };
