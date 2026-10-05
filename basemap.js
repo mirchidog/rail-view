@@ -19492,21 +19492,34 @@ data.forEach(station => {
     color: 'green',
     fillColor: '#055f2b',
     fillOpacity: 0.8,
-    radius: 100
+    radius: 500
   }).addTo(map);
 });
 
-// Get street view image of random coordinate.
+// Choose a random station to fetch API data from.
 let chooseRandomStation = Math.floor(Math.random() * data.length);
-let randomStation = data[chooseRandomStation];
+let station = data[chooseRandomStation];
+let stationLat = station.position_geographique.lat
+let stationLon = station.position_geographique.lon
+console.log("This round's station: " + station.nom + ", at " + stationLat + ", " + stationLon);
 
-function getStreetViewImage(lat, lon) {
-  fetch('https://api.openstreetcam.org/2.0/photo/?lat={lat}&lng={lon}&zoomLevel=18&join=sequence&orderBy=id&radius=500')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
+
+// Get street view image of random coordinate.
+const streetViewUrl = String('https://api.openstreetcam.org/2.0/photo/?lat=' + stationLat + '&lng=' + stationLon + '&zoomLevel=18&join=sequence&orderBy=id&radius=500')
+console.log(streetViewUrl)
+
+async function getStreetViewImage(stationLat, stationLon) {
+  try {
+    const response = await fetch(streetViewUrl);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log(result);
+  } catch (error) {
+    console.error(error.message);
+  }
 }
 getStreetViewImage();
+document.getElementById("hihi").innerHTML = result.status
