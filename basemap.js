@@ -19501,25 +19501,29 @@ let chooseRandomStation = Math.floor(Math.random() * data.length);
 let station = data[chooseRandomStation];
 let stationLat = station.position_geographique.lat
 let stationLon = station.position_geographique.lon
-console.log("This round's station: " + station.nom + ", at " + stationLat + ", " + stationLon);
+console.log("The station " + station.nom + " is at coordinates " + stationLat + ", " + stationLon + ".")
 
 
 // Get street view image of random coordinate.
 const streetViewUrl = String('https://api.openstreetcam.org/2.0/photo/?lat=' + stationLat + '&lng=' + stationLon + '&zoomLevel=18&join=sequence&orderBy=id&radius=500')
-console.log(streetViewUrl)
-
+let result = ''
 async function getStreetViewImage(stationLat, stationLon) {
   try {
     const response = await fetch(streetViewUrl);
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
-
-    const result = await response.json();
-    console.log(result);
+    result = await response.json();
+    if (result.status.apiMessage != "The request has an empty response") {
+      console.log(result.result.data[0].fileurlProc)
+    } else {
+      console.log("No data");
+    }
   } catch (error) {
     console.error(error.message);
   }
 }
-getStreetViewImage();
-document.getElementById("hihi").innerHTML = result.status
+function printImage() {
+  document.getElementById("imgTest").src = result.result.data[0].fileurlProc
+}
+getStreetViewImage().then(printImage);
