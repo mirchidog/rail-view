@@ -19475,6 +19475,7 @@ const data = [
   }
 ];
 
+
 // Add basemap layer
 const map = L.map('map').setView([46.52, 2.55], 6);
 
@@ -19496,6 +19497,7 @@ data.forEach(station => {
   }).addTo(map);
 });
 
+
 // Choose a random station to fetch API data from.
 let chooseRandomStation = Math.floor(Math.random() * data.length);
 let station = data[chooseRandomStation];
@@ -19503,10 +19505,11 @@ let stationLat = station.position_geographique.lat
 let stationLon = station.position_geographique.lon
 console.log("The station " + station.nom + " is at coordinates " + stationLat + ", " + stationLon + ".")
 
-
-// Get street view image of random coordinate.
-const streetViewUrl = String('https://api.openstreetcam.org/2.0/photo/?lat=' + stationLat + '&lng=' + stationLon + '&zoomLevel=18&join=sequence&orderBy=id&radius=500')
+let streetViewUrl = String('https://api.openstreetcam.org/2.0/photo/?lat=' + stationLat + '&lng=' + stationLon + '&zoomLevel=18&join=sequence&orderBy=id&radius=500')
 let result = ''
+
+
+// Get street view image from a random station's coordinates.
 async function getStreetViewImage(stationLat, stationLon) {
   try {
     const response = await fetch(streetViewUrl);
@@ -19516,14 +19519,41 @@ async function getStreetViewImage(stationLat, stationLon) {
     result = await response.json();
     if (result.status.apiMessage != "The request has an empty response") {
       console.log(result.result.data[0].fileurlProc)
+      document.getElementById("imgTest").src = result.result.data[0].fileurlProc
     } else {
-      console.log("No data");
+      console.log("fetch error")
+      fetchAgain();
     }
   } catch (error) {
-    console.error(error.message);
+    console.error(error)
   }
 }
-function printImage() {
-  document.getElementById("imgTest").src = result.result.data[0].fileurlProc
+getStreetViewImage();
+
+
+// If the original station returns an error, keep retrying until one works.
+async function fetchAgain() {
+  await /* Let's goooo! */ this.getStreetViewImage
+  chooseRandomStation = Math.floor(Math.random() * data.length);
+  station = data[chooseRandomStation];
+  stationLat = station.position_geographique.lat
+  stationLon = station.position_geographique.lon
+  console.log("The station " + station.nom + " is at coordinates " + stationLat + ", " + stationLon + ".")
+  streetViewUrl = String('https://api.openstreetcam.org/2.0/photo/?lat=' + stationLat + '&lng=' + stationLon + '&zoomLevel=18&join=sequence&orderBy=id&radius=500')
+  try {
+    const response = await fetch(streetViewUrl);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    result = await response.json();
+    if (result.status.apiMessage != "The request has an empty response") {
+      console.log(result.result.data[0].fileurlProc)
+      document.getElementById("imgTest").src = result.result.data[0].fileurlProc
+    } else {
+      console.log("fetch errors")
+      fetchAgain();
+    }
+  } catch (error) {
+    console.error(error)
+  }
 }
-getStreetViewImage().then(printImage);
