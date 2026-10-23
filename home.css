@@ -1,0 +1,62 @@
+.caption {
+    position: absolute;
+    bottom: 4px;
+    right: 12px;
+}
+p, a {
+    color: black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 14px;
+}
+span {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+body {
+    margin: 0;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/3/30/Gare_Du_Nord_Interior%2C_Paris%2C_France_-_Diliff.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.4);
+    background-blend-mode: darken;
+}
+.menuBox {
+    width: 30%;
+    background-color: rgba(255, 255, 255, 0.7);
+    margin-left: 12px;
+}
+@font-face {
+    font-family: empireState;
+    src: url(assets/EmpireStateNF.ttf)
+}
+h1 {
+    font-family: 'empireState';
+    font-weight: normal;
+    text-align: center;
+    font-size: 48px;
+    margin-bottom: 0px;
+}
+@font-face {
+    font-family: chippewaFalls;
+    src: url(assets/ChippewaFallsNF.ttf)
+}
+button {
+    font-family: 'chippewaFalls';
+    font-weight: normal;
+    font-size: 24px;
+    margin: 12px 24px;
+    width: 200px;
+    border: 0px;
+    background-color: white;
+}
+h2 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: normal;
+    font-size: 14px;
+    text-align: center;
+}
+button:hover {
+    background-color: rgb(167, 140, 63);
+}
+hr {
+    border-top: 1px solid black;
+}
