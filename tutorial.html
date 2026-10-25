@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tutorial | Rail View</title>
+
+    <!-- Scripts for Leaflet Map -->
+    <link rel="stylesheet" href="style/pages.css">
+    <link rel="stylesheet" href="style/universal.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body>
+    <div class="navbar">
+        <a id="logo">{Rail_View}</a>
+        <a href="home.html">Home</a>
+        <a href="play.html">Play</a>
+        <a>Custom</a>
+    </div>
+    <h1>Tutorial</h1>
+    <p>A note on imagery: Rail View is an open source game that uses public data, so the street view imagery is not perfect. As imagery is continually uploaded, station locations will get more precise as time goes on. To learn more or to improve the game's imagery, read the KartaView docs here. Additionally, check out the GitHub project here.</p>
+    <h3>Objective</h3>
+    <p>If you've played GeoGuessr, WorldGuessr, or another similar game, this is almost identical. There are five rounds per game, each showing a street view image from a unique train station across France. Within 60 seconds, try to choose the correct location on the map. The closer an answer is, the progressively more points it receives out of 5000. Keep playing to get a new high score!</p>
+    <div id="map1"></div>
+    <script src="script/tutorial.js"></script>
+</body>
+</html>
