@@ -1,5 +1,19 @@
 import { data } from "./stationData.js"
 
+
+// Set up the timer
+var time = 45.1;
+const timer = document.getElementById("timer");
+setInterval(decreaseCount, 100)
+function decreaseCount() {
+  time = (time - 0.1).toFixed(1);
+  timer.innerHTML = time+"s"
+  if (time == 0) {
+    clearInterval();
+  }
+}
+
+
 /*
 
 initialize map

@@ -33,4 +33,26 @@ img {
 .navbar {
         z-index: 1;
         position: absolute;
+        transition:All 0.2s ease;
+    transition-delay: 3s;
+}
+#timer {
+    height: 36px;
+    padding: 10px 16px;
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    font-size: 28px;
+    font-family: chippewaFalls;
+    background-color: darkgrey;
+    border-radius: 6px;
+    width: 76px;
+    text-align: center;
+}
+.pageButton {
+    display: none;
+}
+#logo:hover + .pageButton {
+    display: block;
+    width: 418px;
 }

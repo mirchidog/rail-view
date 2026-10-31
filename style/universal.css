@@ -8,6 +8,7 @@
 }.navbar {
         overflow: hidden;
         background-color: darkgrey;
+        border-radius: 8px;
 }
 .navbar a {
         float: left;
@@ -21,11 +22,11 @@
 }
 #logo {
         font-family: 'empireState';
-        font-size: 21px;
+        font-size: 22px;
 }
-.navbar #logo:hover {
-        background-color: darkgrey;
-}
-.navbar a:hover {
+.pageButton a:hover {
         background-color: #f4f4f4;
+}
+body {
+        padding: 4px;
 }
