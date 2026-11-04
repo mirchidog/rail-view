@@ -51,23 +51,25 @@ fetch random station image
 
 */
 
-// Choose a random station to fetch API data from.
-let chooseRandomStation = Math.floor(Math.random() * data.length);
-let station = data[chooseRandomStation];
-let stationLat = station.position_geographique.lat;
-let stationLon = station.position_geographique.lon;
-let ymin = stationLat - 0.0009;
-let ymax = stationLat + 0.0009;
-let xmin = stationLon - 0.0009;
-let xmax = stationLon + 0.0009;
-let streetViewUrl = String('https://api.panoramax.xyz/api/search?bbox=' + xmin + ',' + ymin + ',' + xmax + ',' + ymax + '&limit=5')
-let result = ''
-let howManyStationsRerolled = 0
+var stationImages = new Array();
+var stationNames = new Array();
+var stationLatitudes = new Array();
+var stationLongitudes = new Array();
+
 
 getStreetViewImage();
 // Get street view image from a random station's coordinates.
-async function getStreetViewImage(xmin, ymin, xmax, ymax) {
-  howManyStationsRerolled = 1
+async function getStreetViewImage() {
+  var result = undefined
+  var chooseRandomStation = Math.floor(Math.random() * data.length);
+  var station = data[chooseRandomStation];
+  var stationLat = station.position_geographique.lat
+  var stationLon = station.position_geographique.lon
+  var ymin = stationLat - 0.0009;
+  var ymax = stationLat + 0.0009;
+  var xmin = stationLon - 0.0009;
+  var xmax = stationLon + 0.0009;
+  var streetViewUrl = String('https://api.panoramax.xyz/api/search?bbox=' + xmin + ',' + ymin + ',' + xmax + ',' + ymax + '&limit=5')
   try {
     const response = await fetch(streetViewUrl);
     if (!response.ok) {
@@ -75,33 +77,37 @@ async function getStreetViewImage(xmin, ymin, xmax, ymax) {
       fetchAgain();
     }
     result = await response.json();
-    if (result.features.length == 0) {
-      console.log("Choice #" + howManyStationsRerolled + ": Insufficient data")
-      fetchAgain();
+    if (result.features.length != 0) {
+      stationNames.push(station.nom);
+      stationImages.push(result.features[0].assets.hd.href);
+      stationLatitudes.push(stationLat);
+      stationLongitudes.push(stationLon);
+      console.log(stationImages);
+      console.log(stationNames);
+      console.log(stationLatitudes);
+      console.log(stationLongitudes);
     } else {
-      outputData();
-      document.getElementById("imgTest").src = result.features[0].assets.hd.href
+      console.log("Insufficient data")
+      fetchAgain();
     }
   } catch (error) {
     console.error(error)
   }
 }
-getStreetViewImage();
 
 
 // If the original station returns an error, keep retrying until one works.
 async function fetchAgain() {
-  await this.getStreetViewImage
-  howManyStationsRerolled = howManyStationsRerolled + 1
-  chooseRandomStation = Math.floor(Math.random() * data.length);
-  station = data[chooseRandomStation];
-  stationLat = station.position_geographique.lat
-  stationLon = station.position_geographique.lon
-  ymin = stationLat - 0.0009;
-  ymax = stationLat + 0.0009;
-  xmin = stationLon - 0.0009;
-  xmax = stationLon + 0.0009;
-  streetViewUrl = String('https://api.panoramax.xyz/api/search?bbox=' + xmin + ',' + ymin + ',' + xmax + ',' + ymax + '&limit=5')
+  var result = undefined
+  var chooseRandomStation = Math.floor(Math.random() * data.length);
+  var station = data[chooseRandomStation];
+  var stationLat = station.position_geographique.lat
+  var stationLon = station.position_geographique.lon
+  var ymin = stationLat - 0.0009;
+  var ymax = stationLat + 0.0009;
+  var xmin = stationLon - 0.0009;
+  var xmax = stationLon + 0.0009;
+  var streetViewUrl = String('https://api.panoramax.xyz/api/search?bbox=' + xmin + ',' + ymin + ',' + xmax + ',' + ymax + '&limit=5')
   try {
     const response = await fetch(streetViewUrl);
     if (!response.ok) {
@@ -109,20 +115,26 @@ async function fetchAgain() {
       fetchAgain();
     }
     result = await response.json();
-    if (result.features.length == 0) {
-      console.log("Choice #" + howManyStationsRerolled + ": Insufficient data")
-      fetchAgain();
+    if (result.features.length != 0) {
+      stationNames.push(station.nom);
+      stationImages.push(result.features[0].assets.hd.href);
+      stationLatitudes.push(stationLat);
+      stationLongitudes.push(stationLon);
+      console.log(stationImages);
+      console.log(stationNames);
+      console.log(stationLatitudes);
+      console.log(stationLongitudes);
     } else {
-      outputData();
-      document.getElementById("imgTest").src = result.features[0].assets.hd.href
+      console.log("Insufficient data")
+      fetchAgain();
     }
   } catch (error) {
     console.error(error)
   }
 }
 
-
-function outputData() {
-  console.log("Choice #" + howManyStationsRerolled + ": " + station.nom + " at coordinates " + stationLat + ", " + stationLon)
-  console.log(result.features[0].assets.hd.href)
+// Generate five stations for the game
+for (let i=0; i<4;i++) {
+  getStreetViewImage();
 }
+document.getElementById("imgTest").src = stationImages[0]
