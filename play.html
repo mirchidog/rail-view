@@ -21,12 +21,15 @@
     </div>
     <div id="timer"></div>
     <div id="map"></div>
-    <a-scene>
-        <a-assets>
-            <img id="imgTest">
-        </a-assets>
-        <a-sky src="#imgTest"></a-sky>
-    </a-scene>
+    <div>
+        <a-scene id="aScene">
+            <a-assets>
+                <img id="imgTest" src="style/assets/loadingScreen.png">
+            </a-assets>
+            <a-sky src="https://panoramax-storage-public-fast.s3.gra.perf.cloud.ovh.net/main-pictures/52/1b/d3/da/6597-48bb-bf6e-9280ab5bd599.jpg" id="asky"></a-sky>
+            <a-plane src="#imgTest" id="aplane" height="100" width="100" rotation="-90 0 0"></a-plane>
+        </a-scene>
+    </div>
 
     <script type="module" src="script/stationData.js"></script>
     <script type="module" src="script/play.js"></script>

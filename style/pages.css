@@ -7,7 +7,18 @@
 html, body {
     height: 100%;
 }
-h1, h3 {
-        font-family: 'chippewaFalls';
-        font-weight: normal;
+h1, h3, h4 {
+    font-family: 'chippewaFalls';
+    font-weight: normal;
+}
+img {
+    width: 100%;
+    margin-top: 12px;
+    border-radius: 6px;
+}
+.caption {
+    position: absolute;
+    bottom: -2px;
+    right: 8px;
+    background-color: rgba(255, 255, 255, 0.7);
 }

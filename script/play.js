@@ -1,7 +1,12 @@
 import { data } from "./stationData.js"
 
 
-// Set up the timer
+/*
+
+start timer
+
+*/
+
 var time = 45.1;
 const timer = document.getElementById("timer");
 setInterval(decreaseCount, 100)
@@ -133,8 +138,37 @@ async function fetchAgain() {
   }
 }
 
+
 // Generate five stations for the game
 for (let i=0; i<4;i++) {
   getStreetViewImage();
 }
-document.getElementById("imgTest").src = stationImages[0]
+
+// Check size of image once all have been fetched
+function checkImageDimensions() {
+  if (stationImages.length < 5) {
+    window.setTimeout(checkImageDimensions, 10);
+  }
+  else {
+    let imageWidth = new Number();
+    let imageHeight = new Number();
+    const img = new Image();
+    img.onload = function() {
+      imageWidth = this.width;
+      imageHeight = this.height;
+      console.log(imageWidth + "x" + imageHeight);
+      if (2 * imageHeight == imageWidth) {
+        // if width is double the height, use the a-sky viewer
+        document.getElementById("asky").src = stationImages[0];
+        console.log("Displaying panorama.");
+      }
+      else {
+        // if anything else, display on the a-plane view
+        document.getElementById("aplane").src = stationImages[0];
+        console.log("Displaying static image.");
+      }
+    }
+    img.src = stationImages[0]
+  }
+}
+checkImageDimensions();
