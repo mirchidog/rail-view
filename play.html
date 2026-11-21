@@ -6,7 +6,10 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
+    <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        { "imports": { "avansel": "https://unpkg.com/avansel@0.0.12/build/avansel.js" } }
+    </script>
     <link rel="stylesheet" href="style/play.css">
     <link rel="stylesheet" href="style/universal.css">
 </head>
@@ -19,17 +22,10 @@
             <a>Custom</a>
         </div>
     </div>
+    <div id="loadingBox"></div>
     <div id="timer"></div>
     <div id="map"></div>
-    <div>
-        <a-scene id="aScene">
-            <a-assets>
-                <img id="imgTest" src="style/assets/loadingScreen.png">
-            </a-assets>
-            <a-sky src="https://panoramax-storage-public-fast.s3.gra.perf.cloud.ovh.net/main-pictures/52/1b/d3/da/6597-48bb-bf6e-9280ab5bd599.jpg" id="asky"></a-sky>
-            <a-plane src="#imgTest" id="aplane" height="100" width="100" rotation="-90 0 0"></a-plane>
-        </a-scene>
-    </div>
+    <div id="pano"></div>
 
     <script type="module" src="script/stationData.js"></script>
     <script type="module" src="script/play.js"></script>
