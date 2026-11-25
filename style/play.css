@@ -2,20 +2,6 @@ html, body {
     height: 100%;
     margin: 0;
 }
-#loadingBox {
-    height: 26px;
-    padding: 10px 16px;
-    position: absolute;
-    left: 16px;
-    bottom: 10px;
-    font-size: 20px;
-    font-family:Georgia, 'Times New Roman', Times, serif;
-    background-color: darkgrey;
-    border-radius: 6px;
-    width: 296px;
-    text-align: center;
-    z-index: 2;
-}
 .leaflet-container {
     height: 100%;
     width: 100%;
@@ -66,11 +52,17 @@ html, body {
     display: block;
     width: 418px;
 }
+.pageButton:hover {
+    display: block;
+    width: 418px;
+}
 html, body, #pano {
     width: 100vw;
     height: 100vh;
     margin: 0px;
     padding: 0px;
+}
+#pano {
     z-index: -1;
 }
 #pano:hover {
