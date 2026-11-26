@@ -65,6 +65,9 @@ async function getStreetViewImage() {
 Initialize game elements
 */
 
+var time = 60.1
+var guessLat = 0;
+var guessLon = 0;
 function startGame() {
   // Update Avansel viewer with first image
   if (stationImages.length != 5) {
@@ -73,7 +76,6 @@ function startGame() {
     panoViewer.sphere(stationImages[0]).start()
 
     // Start timer
-    var time = 60.1;
     const timer = document.getElementById("timer");
     setInterval(decreaseCount, 100);
     function decreaseCount() {
@@ -110,8 +112,6 @@ function startGame() {
     });
 
     // Record player's guess for the round
-    var guessLat = 0;
-    var guessLon = 0;
     var markerGroup = L.layerGroup().addTo(map);
     map.on('click', function(e) {
       guessLat = e.latlng.lat
@@ -130,6 +130,25 @@ function startGame() {
   };
 };
 
+
+const score = [];
+function scoreRound() {
+  const latRange = 8.7386; // stretches from 51.0717°N - 42.3331°N
+  const lonRange = 12.9967; // stretches from 8.230°E - 4.7667°W
+
+  // How funny is this? The grading algorithm for this french train game is GARe!
+  const calcScore = function(g, a, r) {
+    // Finds the inverse of (guess-actual)/range to rate accuracy from 0 to 5000
+    return (1 - (Math.abs(g - a) / r))*5000
+  }
+  // Averages the accuracy from latitude and longitude
+  var avgScore = Math.round((calcScore(guessLat, stationLatitudes[0], latRange) + calcScore(guessLon, stationLongitudes[0], lonRange)) / 2)
+  if (avgScore < 0) {
+    avgScore = 0
+  }
+  score.push(avgScore)
+}
+
 /*
 Load Game
 */
@@ -143,3 +162,12 @@ for (let i=0; i<5;i++) {
 const panoViewer = new Avansel(document.querySelector("#pano"));
 panoViewer.sphere("style/assets/loadingScreen.png").start()
 startGame();
+
+// Start scoring and reset
+const gameEnd = setInterval(function() {
+  if (time <= 0) {
+    scoreRound();
+    console.log("The score: " + score[0]);
+    clearInterval(gameEnd);
+  }
+}, 100);
